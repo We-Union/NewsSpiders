@@ -16,8 +16,8 @@ class WikipediaSpider(scrapy.Spider):
         for event_lable in event_lables:
             print("-----------------------",event_lable)
             yield scrapy.Request(url=self.start_urls[0]+"/"+event_lable, callback=self.parse,headers=headers)
-            if i > 20:
-                return
+            # if i > 20:
+            #     return
             i += 1
 
     def parse(self, response):
