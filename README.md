@@ -15,13 +15,6 @@ stanza.download('en') # download English model
 4. 在项目根目录输入`scrapy crawl wikipedia -o wikipedia.json`命令即可运行。
 
 
-## 爬虫名称对照表
-
-|爬虫名|英文名称|
-| -- | -- |
-|维基百科|wikipedia|
-
-可以从events.txt获取事件名称，抽取事件的时间、内容、名称、URL、地点等信息。
 
 
 ## 使用的主要第三方库
@@ -29,27 +22,27 @@ stanza.download('en') # download English model
 + scrapy : 负责爬取网页
 + stanza : 负责抽取参与者
 
-## 事件抽取方式如下：
 
-### title
+## 爬虫列表
 
-直接读取维基百科标题
+### 1. wikipedia
 
-### desc
+可以从events.txt获取维基百科对应的英文事件名称，让后使用scrapy访问网页，抽取事件的时间、内容、名称、URL、地点等信息。
 
-读取维基百科第一段
+#### 事件抽取方式：
 
-### date
 
-读取维基百科右侧列表的日期
+|字段|抽取方式|
+| -- | -- |
+|tile|直接读取维基百科标题|
+|desc|读取维基百科第一段|
+|date|读取维基百科右侧列表的日期|
+|location|读取维基百科右侧表格的location|
+|joiner|识别出维基百科全文里面的所有实体，取出现次数最多的前20个|
 
-### location
+### 2. cctv
 
-读取维基百科右侧表格的location
 
-### joiner
-
-识别出维基百科全文里面的所有实体，取出现次数最多的前20个
 
 
 
