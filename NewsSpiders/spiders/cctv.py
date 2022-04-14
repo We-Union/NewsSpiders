@@ -9,21 +9,20 @@ import utils
 import scrapy
 import requests
 import re
-import fool
 
 
 
 def get_joiner_and_place(text):
     sentences = utils.get_sentences(texts=text)
-    words, nerss = fool.analysis(sentences)
+    # words, nerss = fool.analysis(sentences)
     joiners = list()
     places = list()
-    for ners in nerss:
-        for ner in ners:
-            if ner[2] in ["person","org"]:
-                joiners.append({"type":ner[2],"content":ner[3]})
-            elif ner[2]  in ["location"]:
-                places.append(ner[3])
+    # for ners in nerss:
+    #     for ner in ners:
+    #         if ner[2] in ["person","org"]:
+    #             joiners.append({"type":ner[2],"content":ner[3]})
+    #         elif ner[2]  in ["location"]:
+    #             places.append(ner[3])
     return joiners,places
 
 class CctvSpider(scrapy.Spider):

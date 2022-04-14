@@ -1,3 +1,5 @@
+from ntpath import join
+from numpy import place
 import scrapy
 import utils
 from NewsSpiders.items import NewsItem
@@ -47,11 +49,34 @@ def get_joiner_from_sentence(sent):
         text = text_tuble[0]
         joiners.append({"type":text_to_type[text],"content":text})
         i += 1
-        if i > 20:
+        if i > 10:
             break
         
     return joiners
 
+
+
+def get_time_place(sent):
+    sentences = get_sentences(texts=sent)
+    times = list()
+    places = list()
+   
+    for sentence in sentences:
+        doc = nlp(sentence)
+        for ent in doc.ents:
+            if ent.type in ['FACILITY','GPE','LOCATION']:
+                places.append(ent.text)
+            if ent.type in ['DATE','TIME']:
+                times.append(ent.text)
+
+    return times,places
+
+def get_main_text(soup):
+    text = ""
+    soup = soup.find("div",class_ = "mw-parser-output")
+    for p in soup.find_all("p"):
+        text += p.get_text()
+    return text
 
 
 class WikipediaSpider(scrapy.Spider):
@@ -84,7 +109,7 @@ class WikipediaSpider(scrapy.Spider):
         # print(content.get_text())
         
 
-        item['time'] = ""
+        item['time'] = []
         item['place'] = []
         infobox = soup.find("table",class_ = re.compile("infobox"))
         if infobox is not None:
@@ -96,11 +121,24 @@ class WikipediaSpider(scrapy.Spider):
                     th = ths[0].get_text()
                     td = tds[0].get_text()
                     if th.find("Date") != -1:
-                        item['time'] = td
+                        item['time'] = [td]
                     if th.find("Location") != -1:
                         item['place'] = td.split(",")
             # print(infobox.get_text())
+            if len(item['time']) == 0  or  len(item['place']) == 0:
 
-        joiner = get_joiner_from_sentence(soup.find(id="bodyContent").get_text())
+                time,place = get_time_place(infobox.get_text())
+                
+                if len(item['time']) == 0:
+                    item['time'] = time
+                if len(item['place']) == 0:
+                    item['place'] = place
+
+
+        joiner = get_joiner_from_sentence(get_main_text(soup))
         item["joiner"] = joiner
+
+
+       
+        
         return item
