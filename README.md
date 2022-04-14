@@ -4,7 +4,16 @@
 
 1. 克隆本项目到本地
 2. 运行`pip install -r requirements.txt`安装依赖
-3. 输入`scrapy crawl wikipedia -o wikipedia.json`运行
+3. 在python中运行如下代码：
+
+```python
+import stanza
+>>> stanza.download('en') # download English model
+
+```
+下载数据。
+
+1. 输入`scrapy crawl wikipedia -o wikipedia.json`运行
 
 
 ## 爬虫名称对照表

@@ -28,7 +28,7 @@ def get_sentences(url = None,texts = None):
         print(html)
         soup = BeautifulSoup(html)
         texts = soup.get_text()
-    sentences = re.split("。|\.|,|，|\?|？|!|！|；|;|:|：|—|-", texts)
+    sentences = re.split("。|\.|，|\?|？|!|！|；|;|:|：|—|-", texts)
     results = list()
     for sentence in sentences:
         if len(sentence) > 1:
