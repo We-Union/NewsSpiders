@@ -1,9 +1,30 @@
+from base64 import encode
 from email import header
+from ntpath import join
 from wsgiref.headers import Headers
+
+from bs4 import BeautifulSoup
 from NewsSpiders.items import NewsItem
 import utils
 import scrapy
+import requests
+import re
+import fool
 
+
+
+def get_joiner_and_place(text):
+    sentences = utils.get_sentences(texts=text)
+    words, nerss = fool.analysis(sentences)
+    joiners = list()
+    places = list()
+    for ners in nerss:
+        for ner in ners:
+            if ner[2] in ["person","org"]:
+                joiners.append({"type":ner[2],"content":ner[3]})
+            elif ner[2]  in ["location"]:
+                places.append(ner[3])
+    return joiners,places
 
 class CctvSpider(scrapy.Spider):
     name = 'cctv'
@@ -18,13 +39,11 @@ class CctvSpider(scrapy.Spider):
         news_list = response.json()['rollData']
         items = []
         for news in news_list:
-            print(news)
             item = NewsItem()
             item['title'] = news['title']
             item['url'] = news['url']
             item['content'] = news['description']
             item['time'] = news['dateTime'][0:10]
-            item['joiner'] = list()
-            item['place'] = list()
+            item['joiner'],item['place'] = get_joiner_and_place(news['url'])
             items.append(item)
         return items
