@@ -4,23 +4,24 @@
 
 1. 克隆本项目到本地
 2. 运行`pip install -r requirements.txt`安装依赖
-3. 在python中运行如下代码：
+3. 打开一个python终端，运行如下代码下载数据：
 
 ```python
 import stanza
->>> stanza.download('en') # download English model
-
+stanza.download('en') # download English model
 ```
-下载数据。
 
-1. 输入`scrapy crawl wikipedia -o wikipedia.json`运行
+
+4. 在项目根目录输入`scrapy crawl wikipedia -o wikipedia.json`命令即可运行。
 
 
 ## 爬虫名称对照表
 
-|爬虫名||
-维基百科
-可以从events.txt获取事件名称，抽取事件的事件、内容、名称、URL、地点等信息。
+|爬虫名|英文名称|
+| -- | -- |
+|维基百科|wikipedia|
+
+可以从events.txt获取事件名称，抽取事件的时间、内容、名称、URL、地点等信息。
 
 
 ## 使用的主要第三方库
