@@ -11,7 +11,7 @@ class NewsItem(scrapy.Item):
     title  = scrapy.Field()
     url = scrapy.Field()
     content = scrapy.Field()
-    time = scrapy.Field()
-    joiner = scrapy.Field()
-    place = scrapy.Field()
+    desc = scrapy.Field()
+    infobox = scrapy.Field()
+
 
