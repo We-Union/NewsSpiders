@@ -13,7 +13,7 @@ stanza.download('en') # download English model
 
 
 4. 在项目根目录输入`scrapy crawl wikipedia -o wikipedia.json  -s LOG_FILE=all.log`命令即可运行爬虫。
-5. 运行`progress.py`可以对爬取的数据进行处理。处理的结果输出在results.json中。为了方便从中途中断，再次运行的时候可以利用之前爬取的数据，运行的时候会采用追加的方式写入文件，每条结果会输出一个："{...},"（不包括引号）。但是这不符合json的格式要求，所以每次运行前需要手动修改一下results.json。
+5. 运行`progress.py`可以对爬取的数据进行处理。处理的结果输出在results.json中。为了方便从中途中断，再次运行的时候可以利用之前爬取的数据，运行的时候会采用追加的方式写入文件，每条结果会输出一行："{...}"（不包括引号）。
 
 
 
